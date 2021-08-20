@@ -6,7 +6,7 @@
     <artifactId>runtime</artifactId>
     <packaging>jar</packaging>
     <name>eo-runtime</name>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <description>The EO programming language runtime library</description>
     <url>https://github.com/hse-eolang/runtime</url>
     <inceptionYear>2021</inceptionYear>
