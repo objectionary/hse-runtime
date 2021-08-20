@@ -153,28 +153,6 @@
                 </execution>
               </executions>
             </plugin>
-
-            <plugin>
-              <groupId>org.jetbrains.dokka</groupId>
-              <artifactId>dokka-maven-plugin</artifactId>
-              <version>1.5.0</version>
-              <executions>
-                  <execution>
-                      <goals>
-                          <goal>javadocJar</goal>
-                      </goals>
-                  </execution>
-              </executions>
-              <configuration>
-                  <dokkaPlugins>
-                      <plugin>
-                          <groupId>org.jetbrains.dokka</groupId>
-                          <artifactId>kotlin-as-java-plugin</artifactId>
-                          <version>1.5.0</version>
-                      </plugin>
-                  </dokkaPlugins>
-              </configuration>
-            </plugin>
             <!-- Javadoc plugin -->
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
@@ -191,7 +169,7 @@
               <configuration>
                 <doclint>none</doclint>
                 <additionalparam>${javadoc.opts}</additionalparam>
-                <excludePackageNames>org.eolang.maven:org.eolang.maven.*</excludePackageNames>
+                <excludePackageNames>io.github.hse_eolang.transpiler:org.eolang.maven.*</excludePackageNames>
               </configuration>
             </plugin>
             <!-- GPG plugin -->
