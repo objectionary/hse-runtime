@@ -88,6 +88,7 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <build>
         <plugins>
@@ -103,9 +104,21 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>com.github.dpaukov:combinatoricslib3</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.MF</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <executions>
                     <execution>
                         <id>default-compile</id>
@@ -117,7 +130,9 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
                 <configuration>
                     <archive>
                         <index>true</index>
@@ -130,7 +145,7 @@
         </plugins>
     </build>
     <profiles>
-    <!-- Deployment profile (required so these plugins are only used when deploying) -->
+      <!-- Deployment profile (required so these plugins are only used when deploying) -->
       <profile>
         <id>deploy</id>
         <properties>
@@ -143,7 +158,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-source-plugin</artifactId>
-              <version>2.4</version>
+              <version>3.2.1</version>
               <executions>
                 <execution>
                   <id>attach-sources</id>
@@ -157,7 +172,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-javadoc-plugin</artifactId>
-              <version>3.2.0</version>
+              <version>3.3.0</version>
               <executions>
                 <execution>
                   <id>attach-javadocs</id>
@@ -176,7 +191,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-gpg-plugin</artifactId>
-              <version>1.6</version>
+              <version>3.0.1</version>
               <executions>
                   <execution>
                       <id>sign-artifacts</id>
