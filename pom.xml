@@ -39,6 +39,52 @@
     <name>eo-runtime</name>
     <version>1.0.1</version>
     <description>The EO programming language runtime library</description>
+    <url>https://github.com/hse-eolang/runtime</url>
+    <inceptionYear>2021</inceptionYear>
+    <organization>
+        <name>The HSE-EOLANG Team</name>
+        <url>https://github.com/HSE-Eolang</url>
+    </organization>
+    <licenses>
+        <license>
+        <name>MIT</name>
+        <url>https://www.org.eolang.org/LICENSE.txt</url>
+        <distribution>site</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+        <id>1</id>
+        <name>Yegor Bugayenko</name>
+        <email>yegor256@gmail.com</email>
+        <organization>yegor256.com</organization>
+        <organizationUrl>https://www.yegor256.com</organizationUrl>
+        <roles>
+            <role>Architect</role>
+            <role>Developer</role>
+        </roles>
+        <timezone>-7</timezone>
+        </developer>
+    </developers>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/HSE-Eolang/runtime/issues</url>
+    </issueManagement>
+    <scm>
+        <connection>scm:git:git@github.com:HSE-Eolang/runtime.git</connection>
+        <developerConnection>scm:git:git@github.com:HSE-Eolang/runtime.git</developerConnection>
+        <url>https://github.com/HSE-Eolang/runtime</url>
+    </scm>
+    <distributionManagement>
+    <snapshotRepository>
+        <id>ossrh</id>
+        <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+        <id>ossrh</id>
+        <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    </distributionManagement>
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -83,4 +129,95 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+    <!-- Deployment profile (required so these plugins are only used when deploying) -->
+      <profile>
+        <id>deploy</id>
+        <properties>
+          <javadoc.opts>-Xdoclint:none</javadoc.opts>
+          <kotlin.version>1.4.32</kotlin.version>
+        </properties>
+        <build>
+          <plugins>
+            <!-- Source plugin -->
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-source-plugin</artifactId>
+              <version>2.4</version>
+              <executions>
+                <execution>
+                  <id>attach-sources</id>
+                  <goals>
+                    <goal>jar-no-fork</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+
+            <plugin>
+              <groupId>org.jetbrains.dokka</groupId>
+              <artifactId>dokka-maven-plugin</artifactId>
+              <version>1.5.0</version>
+              <executions>
+                  <execution>
+                      <goals>
+                          <goal>javadocJar</goal>
+                      </goals>
+                  </execution>
+              </executions>
+              <configuration>
+                  <dokkaPlugins>
+                      <plugin>
+                          <groupId>org.jetbrains.dokka</groupId>
+                          <artifactId>kotlin-as-java-plugin</artifactId>
+                          <version>1.5.0</version>
+                      </plugin>
+                  </dokkaPlugins>
+              </configuration>
+            </plugin>
+            <!-- Javadoc plugin -->
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+              <version>3.2.0</version>
+              <executions>
+                <execution>
+                  <id>attach-javadocs</id>
+                  <goals>
+                    <goal>jar</goal>
+                  </goals>
+                </execution>
+              </executions>
+              <configuration>
+                <doclint>none</doclint>
+                <additionalparam>${javadoc.opts}</additionalparam>
+                <excludePackageNames>org.eolang.maven:org.eolang.maven.*</excludePackageNames>
+              </configuration>
+            </plugin>
+            <!-- GPG plugin -->
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-gpg-plugin</artifactId>
+              <version>1.6</version>
+              <executions>
+                  <execution>
+                      <id>sign-artifacts</id>
+                      <phase>verify</phase>
+                      <goals>
+                          <goal>sign</goal>
+                      </goals>
+                      <configuration>
+                          <!-- Prevent `gpg` from using pinentry programs -->
+                          <gpgArguments>
+                              <arg>--pinentry-mode</arg>
+                              <arg>loopback</arg>
+                          </gpgArguments>
+                      </configuration>
+                  </execution>
+              </executions>
+            </plugin>
+          </plugins>
+        </build>
+      </profile>
+    </profiles>
 </project>
