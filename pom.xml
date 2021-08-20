@@ -202,7 +202,6 @@
                         <configuration>
                             <doclint>none</doclint>
                             <additionalparam>${javadoc.opts}</additionalparam>
-                            <excludePackageNames>io.github.hse_eolang.transpiler:org.eolang.maven.*</excludePackageNames>
                         </configuration>
                     </plugin>
                     <!-- GPG plugin -->
