@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.hse-eolang</groupId>
     <artifactId>runtime</artifactId>
     <packaging>jar</packaging>
     <name>eo-runtime</name>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <description>The EO programming language runtime library</description>
     <url>https://github.com/hse-eolang/runtime</url>
     <inceptionYear>2021</inceptionYear>
@@ -16,23 +16,36 @@
     </organization>
     <licenses>
         <license>
-        <name>MIT</name>
-        <url>https://www.org.eolang.org/LICENSE.txt</url>
-        <distribution>site</distribution>
+            <name>MIT</name>
+            <url>https://www.org.eolang.org/LICENSE.txt</url>
+            <distribution>site</distribution>
         </license>
     </licenses>
     <developers>
         <developer>
-        <id>1</id>
-        <name>Yegor Bugayenko</name>
-        <email>yegor256@gmail.com</email>
-        <organization>yegor256.com</organization>
-        <organizationUrl>https://www.yegor256.com</organizationUrl>
-        <roles>
-            <role>Architect</role>
-            <role>Developer</role>
-        </roles>
-        <timezone>-7</timezone>
+            <id>1</id>
+            <name>nlchar</name>
+            <email>contact.me@nlchar.rocks</email>
+            <url>https://github.com/nlchar</url>
+            <organization>HSE-EOLANG</organization>
+            <organizationUrl>https://github.com/HSE-Eolang/</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>Moscow</timezone>
+        </developer>
+        <developer>
+            <id>2</id>
+            <name>wsngit</name>
+            <url>https://github.com/wsngit</url>
+            <organization>HSE-EOLANG</organization>
+            <organizationUrl>https://github.com/HSE-Eolang/</organizationUrl>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>Moscow</timezone>
         </developer>
     </developers>
     <issueManagement>
@@ -45,14 +58,14 @@
         <url>https://github.com/HSE-Eolang/runtime</url>
     </scm>
     <distributionManagement>
-    <snapshotRepository>
-        <id>ossrh</id>
-        <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-        <id>ossrh</id>
-        <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -142,75 +155,80 @@
                     </archive>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
         </plugins>
     </build>
     <profiles>
-      <!-- Deployment profile (required so these plugins are only used when deploying) -->
-      <profile>
-        <id>deploy</id>
-        <properties>
-          <javadoc.opts>-Xdoclint:none</javadoc.opts>
-          <kotlin.version>1.4.32</kotlin.version>
-        </properties>
-        <build>
-          <plugins>
-            <!-- Source plugin -->
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-source-plugin</artifactId>
-              <version>3.2.1</version>
-              <executions>
-                <execution>
-                  <id>attach-sources</id>
-                  <goals>
-                    <goal>jar-no-fork</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
-            <!-- Javadoc plugin -->
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-javadoc-plugin</artifactId>
-              <version>3.3.0</version>
-              <executions>
-                <execution>
-                  <id>attach-javadocs</id>
-                  <goals>
-                    <goal>jar</goal>
-                  </goals>
-                </execution>
-              </executions>
-              <configuration>
-                <doclint>none</doclint>
-                <additionalparam>${javadoc.opts}</additionalparam>
-                <excludePackageNames>io.github.hse_eolang.transpiler:org.eolang.maven.*</excludePackageNames>
-              </configuration>
-            </plugin>
-            <!-- GPG plugin -->
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-gpg-plugin</artifactId>
-              <version>3.0.1</version>
-              <executions>
-                  <execution>
-                      <id>sign-artifacts</id>
-                      <phase>verify</phase>
-                      <goals>
-                          <goal>sign</goal>
-                      </goals>
-                      <configuration>
-                          <!-- Prevent `gpg` from using pinentry programs -->
-                          <gpgArguments>
-                              <arg>--pinentry-mode</arg>
-                              <arg>loopback</arg>
-                          </gpgArguments>
-                      </configuration>
-                  </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </build>
-      </profile>
+        <!-- Deployment profile (required so these plugins are only used when deploying) -->
+        <profile>
+            <id>deploy</id>
+            <properties>
+                <javadoc.opts>-Xdoclint:none</javadoc.opts>
+                <kotlin.version>1.4.32</kotlin.version>
+            </properties>
+            <build>
+                <plugins>
+                    <!-- Source plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Javadoc plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.3.0</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <doclint>none</doclint>
+                            <additionalparam>${javadoc.opts}</additionalparam>
+                            <excludePackageNames>io.github.hse_eolang.transpiler:org.eolang.maven.*</excludePackageNames>
+                        </configuration>
+                    </plugin>
+                    <!-- GPG plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.0.1</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- Prevent `gpg` from using pinentry programs -->
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 </project>
