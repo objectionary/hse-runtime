@@ -9,7 +9,7 @@ import org.eolang.core.data.EOData;
  */
 public class EOstdout extends EOObject {
 
-    private EOObject out;
+    private final EOObject out;
 
     /**
      * Instantiates a new stdout.

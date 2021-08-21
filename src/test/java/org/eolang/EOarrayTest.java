@@ -466,10 +466,6 @@ class EOarrayTest {
         MatcherAssert.assertThat(resultArray.EOisEmpty()._getData().toBoolean(), is(true));
     }
 
-    @Test
-    void EOmin() {
-    }
-
     /**
      * Checks that {@code EOpairs} does not guarantee uniqueness of pairs when elements of an array are not unique.
      */

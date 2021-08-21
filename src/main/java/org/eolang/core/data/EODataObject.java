@@ -10,7 +10,7 @@ public class EODataObject extends EOObject {
     /**
      * Хранимые данные.
      */
-    protected EOData _data;
+    protected final EOData _data;
 
     public EODataObject(Object _data) {
         this._data = new EOData(_data);
@@ -41,8 +41,7 @@ public class EODataObject extends EOObject {
 
     public EOObject _clone() {
         try {
-            EOObject res = (EOObject) this.clone();
-            return res;
+            return (EOObject) this.clone();
         } catch (CloneNotSupportedException cnsException) {
             cnsException.printStackTrace();
         }

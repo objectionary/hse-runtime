@@ -1,7 +1,5 @@
 package org.eolang.core.data;
 
-import java.util.Objects;
-
 /**
  * Объект представляющий данные - результат датаризации в EO.
  */
@@ -9,7 +7,7 @@ public class EOData {
     /**
      * Данные
      */
-    private Object _data;
+    private final Object _data;
 
     public EOData(Object _data) {
         this._data = _data;

@@ -3,8 +3,7 @@ package org.eolang;
 import org.eolang.core.EOObject;
 import org.paukov.combinatorics3.Generator;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Represents an array data structure.
@@ -14,7 +13,7 @@ public class EOarray extends EOObject {
     /**
      * The underlying data structure behind this array is a Java List.
      * Effectively, the {@code _array} is an unmodifiable list since both
-     * constructors of this class rely on the {@code List.of()} method.
+     * constructors of this class rely on the {@code Collections.unmodifiableList()} method.
      */
     private final List<EOObject> _array;
 
@@ -22,7 +21,7 @@ public class EOarray extends EOObject {
      * Instantiates an empty array.
      */
     public EOarray() {
-        _array = List.of();
+        _array = Collections.unmodifiableList(Arrays.asList());
     }
 
     /**
@@ -31,7 +30,7 @@ public class EOarray extends EOObject {
      * @param objects contents of the array being instantiated.
      */
     public EOarray(EOObject... objects) {
-        _array = List.of(objects);
+        _array = Collections.unmodifiableList(Arrays.asList(objects));
     }
 
     /**
@@ -260,7 +259,7 @@ public class EOarray extends EOObject {
      */
     public EOarray EOpairs() {
         return new EOarray(
-                Generator.combination(this._array.toArray(EOObject[]::new))
+                Generator.combination(this._array.toArray(new EOObject[this._array.size()]))
                         .simple(2)
                         .stream()
                         .map(pair -> new EOtuple(pair.get(0), pair.get(1)))

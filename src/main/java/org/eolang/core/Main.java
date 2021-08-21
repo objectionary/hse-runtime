@@ -56,7 +56,7 @@ public class Main {
         List<Object> appValues = new ArrayList<>();
         for (int i = 0; i < appParams.length; i++) {
             if (appParams[i].getType().getCanonicalName().endsWith("[]")) {
-                List<EOstring> objs = Arrays.stream(args).skip(i + 1).map(arg -> new EOstring(arg)).collect(Collectors.toList());
+                List<EOstring> objs = Arrays.stream(args).skip(i + 1).map(EOstring::new).collect(Collectors.toList());
                 appValues.add(objs.toArray(new EOstring[0]));
                 break;
             } else {

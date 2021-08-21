@@ -11,8 +11,8 @@ import java.util.Objects;
  * Объект осуществляющий создание форматированых строк.
  */
 public class EOsprintf extends EOObject {
-    private EOObject format;
-    private EOObject[] data;
+    private final EOObject format;
+    private final EOObject[] data;
 
     public EOsprintf(EOObject format, EOObject... data) {
         this.format = format;
@@ -72,7 +72,7 @@ public class EOsprintf extends EOObject {
         final StringBuilder sb = new StringBuilder("sprintf(");
         sb.append("format:").append(format);
         sb.append(", data:");
-        sb.append(new EOarray(data).toString());
+        sb.append(new EOarray(data));
         sb.append(')');
         return sb.toString();
     }

@@ -86,7 +86,7 @@ public class EOstring extends EOObject {
         String last = stringValue.substring(i);
         if(last.length() > 0)
             strList.add(new EOstring(last));
-        return new EOarray(strList.toArray(EOstring[]::new));
+        return new EOarray(strList.toArray(new EOstring[strList.size()]));
     }
 
     /***

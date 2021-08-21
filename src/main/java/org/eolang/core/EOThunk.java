@@ -23,7 +23,7 @@ public class EOThunk extends EOObject {
     /***
      * The lambda that is used to instantiate the wrapped object lazily.
      */
-    private Supplier<EOObject> thunk;
+    private final Supplier<EOObject> thunk;
 
     /**
      * Creates a lazy (delayed) instantiation of a wrapped object.
