@@ -382,13 +382,10 @@ public class EOarray extends EOObject {
         }
         // copy the array removing the specified element
         EOObject[] newArray = new EOObject[_array.size()-1];
-        int k = 0;
-        for (int j = 0; j < _array.size(); j++) {
-            if (j != position) {
-                newArray[k] = _array.get(j);
-                k += 1;
-            }
-        }
+        if(position>0)
+            System.arraycopy(this._array.toArray(new EOObject[0]), 0, newArray, 0, position);
+        if(position<_array.size()-1)
+            System.arraycopy(this._array.toArray(new EOObject[0]), position+1, newArray, position, _array.size() - position - 1);
         return new EOarray(newArray);
     }
 
