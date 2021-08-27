@@ -116,6 +116,34 @@ public class EOarray extends EOObject {
     }
 
     /**
+     * Inserts the object {@code obj} at the position {@code i} of this array.
+     * @param obj the object to insert.
+     * @param i the position to insert the object at.
+     * @return a copy of this array with the {@code obj} object inserted at the position {@code i}.
+     * @throws IndexOutOfBoundsException if {@code i} is out of bounds of this array
+     *                                   (i.e., {@code array.length <= i < 0}).
+     */
+    public EOarray EOinsert(EOObject obj, EOObject i) {
+        int index  = i._getData().toInt().intValue();
+        if (index > _array.size() || index < 0) {
+            throw new IndexOutOfBoundsException(
+                    String.format(
+                            "Cannot insert the object at the position %d of the following array: %s. The index is out of bounds.",
+                            index,
+                            this
+                    )
+            );
+        }
+        EOObject[] newArray = new EOObject[_array.size() + 1];
+        if(index>0)
+            System.arraycopy(this._array.toArray(new EOObject[0]), 0, newArray, 0, index);
+        newArray[index] = obj;
+        if(index<_array.size())
+            System.arraycopy(this._array.toArray(new EOObject[0]), index, newArray, index+1, _array.size() - index);
+        return new EOarray(newArray);
+    }
+
+    /**
      * Determines if this array is empty.
      *
      * @return {@code true} if this array is empty, otherwise {@code false}.

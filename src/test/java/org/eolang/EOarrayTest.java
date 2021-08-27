@@ -4,6 +4,7 @@ import org.eolang.core.EOObject;
 import org.eolang.io.EOstdout;
 import org.eolang.txt.EOsprintf;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -11,6 +12,7 @@ import java.io.PrintStream;
 
 import static net.obvj.junit.utils.matchers.AdvancedMatchers.throwsException;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Test cases for {@link EOarray}.
@@ -295,6 +297,63 @@ class EOarrayTest {
         EOint index = new EOint(3);
         EOint result = (EOint) inputArray.EOget(index);
         MatcherAssert.assertThat(result, is(expectedResult));
+    }
+
+    /**
+     * Checks that {@code EOinsert} inserts objects in proper positions.
+     * TODO factor tests
+     */
+    @Test
+    void EOinsert(){
+        EOarray arr = new EOarray(
+                new EOint(0),
+                new EOint(2),
+                new EOint(4)
+        );
+
+        EOarray arr2 = new EOarray();
+
+        EOarray newArr = arr.EOinsert(new EOint(1), new EOint(1));
+        newArr = newArr.EOinsert(new EOint(3), new EOint(3));
+        newArr = newArr.EOinsert(new EOint(5), new EOint(5));
+
+        MatcherAssert.assertThat(
+                arr.EOlength()._getData().toInt(),
+                Matchers.equalTo(3L)
+        );
+        MatcherAssert.assertThat(
+                newArr.EOlength()._getData().toInt(),
+                Matchers.equalTo(6L)
+        );
+        for (long i = 0; i< newArr.EOlength()._getData().toInt();i++){
+            MatcherAssert.assertThat(
+                    newArr.EOget(new EOint(i))._getData().toInt(),
+                    Matchers.equalTo(i)
+            );
+        }
+
+        //Insert to empty array
+        newArr = arr2.EOinsert(new EOint(123), new EOint(0));
+        MatcherAssert.assertThat(
+                newArr.EOget(new EOint(0L))._getData().toInt(),
+                Matchers.equalTo(123L)
+        );
+
+    }
+
+    /**
+     * Checks Exceptions of {@code EOinsert}.
+     * TODO factor tests
+     */
+    @Test
+    void EOinsertExceptions(){
+        EOarray arr = new EOarray(
+                new EOint(0),
+                new EOint(2),
+                new EOint(4)
+        );
+        assertThrows(IndexOutOfBoundsException.class, () -> arr.EOinsert(new EObool(true), new EOint(-1L)));
+        assertThrows(IndexOutOfBoundsException.class, () -> arr.EOinsert(new EObool(true), new EOint(4L)));
     }
 
     /**
