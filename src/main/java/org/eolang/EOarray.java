@@ -98,6 +98,7 @@ public class EOarray extends EOObject {
      * @param from inex of the element from which the search will start.
      * @param validator the object for element validation, must have 1 free attribute and must be datarized to boolean.
      * @return a copy of this array with the inserted object.
+     * TODO check docs
      */
     public EOint EOfind(EOObject from, EOObject validator) {
         int index  = from._getData().toInt().intValue();

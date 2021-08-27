@@ -231,7 +231,7 @@ class EOarrayTest {
 
     /**
      * Checks {@code EOfind} object.
-     * @TODO Add test
+     * TODO Add test
      */
     @Test
     void EOfind(){
@@ -317,7 +317,7 @@ class EOarrayTest {
 
     /**
      * Checks that {@code EOinsert} inserts objects in proper positions.
-     * @TODO factor tests
+     * TODO factor tests
      */
     @Test
     void EOinsert(){
@@ -359,7 +359,7 @@ class EOarrayTest {
 
     /**
      * Checks Exceptions of {@code EOinsert}.
-     * @TODO factor tests
+     * TODO factor tests
      */
     @Test
     void EOinsertExceptions(){
