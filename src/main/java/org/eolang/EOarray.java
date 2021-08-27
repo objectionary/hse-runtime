@@ -21,7 +21,7 @@ public class EOarray extends EOObject {
      * Instantiates an empty array.
      */
     public EOarray() {
-        _array = Collections.unmodifiableList(Arrays.asList());
+        _array = Collections.emptyList();
     }
 
     /**
@@ -43,7 +43,7 @@ public class EOarray extends EOObject {
      */
     public EOarray EOappend(EOObject obj) {
         EOObject[] newArray = new EOObject[_array.size() + 1];
-        System.arraycopy(_array.toArray(), 0, newArray, 0, _array.size());
+        System.arraycopy(this._array.toArray(new EOObject[0]), 0, newArray, 0, _array.size());
         newArray[_array.size()] = obj;
         return new EOarray(newArray);
     }
@@ -63,7 +63,7 @@ public class EOarray extends EOObject {
             if (array2Size > 0) {
                 EOObject[] newArray;
                 newArray = new EOObject[_array.size() + array2Size];
-                System.arraycopy(_array.toArray(), 0, newArray, 0, _array.size());
+                System.arraycopy(this._array.toArray(new EOObject[0]), 0, newArray, 0, _array.size());
                 for (int i = _array.size(); i < newArray.length; ++i) {
                     newArray[i] = obj._getAttribute("EOget", new EOint(i - _array.size()));
                 }
@@ -259,7 +259,7 @@ public class EOarray extends EOObject {
      */
     public EOarray EOpairs() {
         return new EOarray(
-                Generator.combination(this._array.toArray(new EOObject[this._array.size()]))
+                Generator.combination(this._array.toArray(new EOObject[0]))
                         .simple(2)
                         .stream()
                         .map(pair -> new EOtuple(pair.get(0), pair.get(1)))
@@ -366,8 +366,21 @@ public class EOarray extends EOObject {
         }
         // copy the array replacing the specified element with the new value
         EOObject[] newArray = new EOObject[_array.size()];
-        System.arraycopy(_array.toArray(), 0, newArray, 0, _array.size());
+        System.arraycopy(this._array.toArray(new EOObject[0]), 0, newArray, 0, _array.size());
         newArray[position] = newValue;
+        return new EOarray(newArray);
+    }
+
+    /**
+     * Reverses elements of this array.
+     * Example: [1, 2, 3, 4] -> [4, 3, 2, 1].
+     * @return a reversed copy of this array.
+     */
+    public EOarray EOreverse() {
+        EOObject[] newArray = new EOObject[_array.size()];
+        for (int i = _array.size()-1; i >= 0; i--) {
+            newArray[_array.size()-1-i] = _array.get(i);
+        }
         return new EOarray(newArray);
     }
 
