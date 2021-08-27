@@ -94,6 +94,28 @@ public class EOarray extends EOObject {
     }
 
     /**
+     * Searches for an element in this array
+     * @param from inex of the element from which the search will start.
+     * @param validator the object for element validation, must have 1 free attribute and must be datarized to boolean.
+     * @return a copy of this array with the inserted object.
+     */
+    public EOint EOfind(EOObject from, EOObject validator) {
+        int index  = from._getData().toInt().intValue();
+        if (index > _array.size() || index < 0) {
+            return new EOint(-1L);
+        }
+        for(int i = index; i < _array.size(); i++){
+            try {
+                if(validator._getAttribute("EOvalidator", _array.get(i))._getDecoratedObject()._getData().toBoolean())
+                    return new EOint(i);
+            } catch (Exception e) {
+                return new EOint(-1L);
+            }
+        }
+        return new EOint(-1L);
+    }
+
+    /**
      * Retrieves the element at the position {@code i} of this array.
      *
      * @param i an index of the element to be fetched.

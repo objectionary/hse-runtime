@@ -230,6 +230,22 @@ class EOarrayTest {
     }
 
     /**
+     * Checks {@code EOfind} object.
+     * TODO Add test
+     */
+    @Test
+    void EOfind(){
+        EOarray arr = new EOarray(
+                new EOint(0),
+                new EOint(9),
+                new EOint(5),
+                new EOint(7),
+                new EOint(12),
+                new EOint(4)
+        );
+    }
+
+    /**
      * Checks that {@code EOget} fails when working with empty arrays.
      */
     @Test
