@@ -1,3 +1,4 @@
+[![Build Status](https://github.com/HSE-Eolang/hse-runtime/actions/workflows/build-status.yml/badge.svg)](https://github.com/HSE-Eolang/hse-runtime/actions/workflows/build-status.yml)
 ## What this repository is for?
 This repository proposes and demonstrates an alternative branch of the EO runtime based on a new transcompilation model of EO programs to Java source codes.  
 The original (CQFN) model is depicted [here](https://miro.com/app/board/o9J_lM0FZHk=/).
