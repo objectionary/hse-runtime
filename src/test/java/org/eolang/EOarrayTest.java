@@ -1047,6 +1047,77 @@ class EOarrayTest {
         EOarray outputArray = inputArray.EOreverse();
         MatcherAssert.assertThat(outputArray, is(expectedOutputArray));
     }
+
+    /**
+     * Checks array datarization.
+     */
+    @Test
+    void EOdatarizationTest() {
+        EOarray inputArray = new EOarray(
+                new EOint(1L),
+                new EOint(13L),
+                new EOint(23L),
+                new EOint(54L),
+                new EOint(48L)
+        );
+        MatcherAssert.assertThat(
+                inputArray._getData().toInt(),
+                Matchers.equalTo(48L)
+        );
+    }
+
+    /**
+     * Checks array datarization. One or more items can't be  datarized.
+     */
+    @Test
+    void EOdatarizationErrorTest() {
+        EOObject emptyObject = new EOObject() {
+        };
+        EOObject emptyObject2 = new EOObject() {
+        };
+        EOarray inputArray = new EOarray(
+                new EOint(1L),
+                new EOint(13L),
+                emptyObject,
+                new EOint(54L),
+                new EOint(48L)
+        );
+        EOarray inputArray2 = new EOarray(
+                emptyObject,
+                new EOint(13L),
+                emptyObject2,
+                new EOint(54L),
+                new EOint(48L)
+        );
+        MatcherAssert.assertThat(
+            () -> inputArray._getData().toInt(),
+            throwsException(RuntimeException.class)
+                .withMessage(
+                    String.format(
+                        "Object %s cannot be dataized: it has nor data behind it, neither a decoratee to rely on.",
+                            emptyObject.getClass().getTypeName()
+                    )
+                )
+        );
+    }
+
+    /**
+     * Checks array datarization. Empty array datarization.
+     */
+    @Test
+    void EOdatarizationEmptyErrayTest() {
+        EOarray inputArray = new EOarray();
+        MatcherAssert.assertThat(
+                () -> inputArray._getData().toInt(),
+                throwsException(RuntimeException.class)
+                        .withMessage(
+                                String.format(
+                                        "Object %s cannot be dataized: it has nor data behind it, neither a decoratee to rely on.",
+                                        inputArray.getClass().getTypeName()
+                                )
+                        )
+        );
+    }
 }
 
 class StdoutMockingUtils {

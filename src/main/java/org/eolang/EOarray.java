@@ -1,6 +1,8 @@
 package org.eolang;
 
 import org.eolang.core.EOObject;
+import org.eolang.core.data.EOData;
+import org.eolang.core.data.EONoData;
 import org.paukov.combinatorics3.Generator;
 
 import java.util.*;
@@ -31,6 +33,23 @@ public class EOarray extends EOObject {
      */
     public EOarray(EOObject... objects) {
         _array = Collections.unmodifiableList(Arrays.asList(objects));
+    }
+
+    /**
+     * Retrieves data behind array object (i.e., performs dataeization operation over the object).
+     * Performs sequential datarization of array elements. The result is the result of datarization of the last item.
+     *
+     * @return Data behind this object.
+     * @throws RuntimeException Thrown when this object cannot be dataized since it has nor data behind it, neither a decoratee to rely on.
+     */
+    @Override
+    public EOData _getData() {
+        EOData res = new EONoData();
+        if (_array.size() == 0) {
+            throw new RuntimeException(String.format("Object %s cannot be dataized: it has nor data behind it, neither a decoratee to rely on.", getClass().getTypeName()));
+        }
+        for (EOObject eoObject : _array) res = eoObject._getData();
+        return res;
     }
 
     /**
